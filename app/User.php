@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use \Cartalyst\Sentinel\Users\EloquentUser as Sentineluser;
 
-class User extends Authenticatable
+class User extends Sentineluser
 {
     /**
      * The attributes that are mass assignable.
