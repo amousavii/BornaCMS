@@ -149,8 +149,15 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+//    public function destroy($id)
+//    {
+//        $user = Sentinel::findUserById($id);
+//        $user->delete();
+//        return redirect('admin/users')->withSuccess('user Deleted Successfully');
+//    }
+    public function destroy(Request $request)
     {
+        $id=$request->user_id;
         $user = Sentinel::findUserById($id);
         $user->delete();
         return redirect('admin/users')->withSuccess('user Deleted Successfully');

@@ -10,11 +10,17 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['middleware'=>'web'],function() {
+Route::get('/', function () {
+    return view('front.index');
+});
 
-    Route::get('/', function () {
-        return view('front.index');
-    });
+Route::post('/login' ,['as'=>'admin.login' , 'uses'=>'AuthUsers@login']);
+Route::get('test',function (){
+    Sentinel::logout();
+});
+Route::group(['middleware'=>['web','admin']],function() {
+
+
     Route::get('admin', function () {
         return view('admin.index');
     });
@@ -27,10 +33,6 @@ Route::group(['middleware'=>'web'],function() {
         'as' => 'admin.create.role'
     ]);
 
-    Route::get('test', function () {
-
-
-    });
 
 
 });

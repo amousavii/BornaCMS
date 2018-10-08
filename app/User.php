@@ -23,6 +23,8 @@ class User extends SentinelUser
          'first_name',
     ];
 
+    protected $loginNames = ['email'];
+
     /**
      * The attributes that should be hidden for arrays.
      *

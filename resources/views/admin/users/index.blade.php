@@ -33,14 +33,20 @@
             <td>{{$user->first_name}}</td>
             <td>{{$user->last_name}}</td>
             <td>{{$user->email}}</td>
+            <td>
             @foreach($user->roles as $role)
-                <td>{{$role->name}}</td>
+               {{$role->name}} <br>
                 @endforeach
+            </td>
             <td>{{$user->created_at->diffForHumans()}}</td>
             {{--<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>--}}
             <td><a href="{{route('admin.users.edit',$user->id)}}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-            <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-        </tr>
+
+            {{--{{Form::open(['method'=>'DELETE','action'=>['AdminUsersController@destroy',$user->id]])}}--}}
+                     {{--{!! Form::submit('delete',['class'=>'btn btn-danger']) !!}--}}
+            {{--{{Form::close()}}--}}
+            <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-primary btn-xs" data-title="delete" data-toggle="modal" data-target="#delete" data-id="{{$user->id}}"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+
             @endforeach
 
 
@@ -113,14 +119,27 @@
 
                 </div>
                 <div class="modal-footer ">
-                    <a href="{{route('admin.users.destroy' , $user->id)}}" class="btn btn-success" >
-                    <span class="glyphicon glyphicon-ok-sign"></span> Yes
-                    </a>
-
+                        {{Form::open(['method'=>'DELETE','action'=>['AdminUsersController@destroy',$user->id]])}}
+                    {!! Form::hidden('user_id',null,['id'=>"user_id" ,'class'=>'form-control']) !!}
+                        {!! Form::submit('delete',['class'=>'btn btn-danger']) !!}
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                        {{Form::close()}}
+
+
+
                 </div>
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
     </div>
+@section('footer')
+    <script>
+        $('#delete').on('show.bs.modal',function(event){
+            var button =$(event.relatedTarget)
+            var user_id = button.data('id')
+            var modal = $(this)
+            modal.find('.modal-footer #user_id').val(user_id)
+        })
+        </script>
+    @stop
