@@ -2,17 +2,25 @@
 
 namespace App;
 
-use \Cartalyst\Sentinel\Users\EloquentUser as Sentineluser;
+use Cartalyst\Sentinel\Users\EloquentUser as SentinelUser;
 
-class User extends Sentineluser
+use Sentinel;
+
+class User extends SentinelUser
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
+     protected $fillable=[
+         'photo_id',
+         'username',
+         'phone_number',
+         'email',
+         'password',
+         'last_name',
+         'first_name',
     ];
 
     /**
@@ -20,7 +28,13 @@ class User extends Sentineluser
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+
+    public function scopeAll($query){
+        return Sentinel::getUserRepository()->get();
+    }
+
+    public function photo(){
+       return $this->belongsTo('App\Photo');
+    }
+
 }

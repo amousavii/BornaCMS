@@ -10,12 +10,27 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::group(['middleware'=>'web'],function() {
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('admin', function () {
-    return view('admin.index');
-});
+    Route::get('/', function () {
+        return view('front.index');
+    });
+    Route::get('admin', function () {
+        return view('admin.index');
+    });
 
-Route::resource('admin/users' , 'AdminUsersController');
+    Route::resource('admin/users', 'AdminUsersController');
+    Route::get('admin/roles', 'AdminUsersController@roleIndex');
+    Route::get('admin/roles/create', 'AdminUsersController@roleCreate');
+    Route::post('admin/roles/create', [
+        'uses' => 'AdminUsersController@roleStore',
+        'as' => 'admin.create.role'
+    ]);
+
+    Route::get('test', function () {
+
+
+    });
+
+
+});
