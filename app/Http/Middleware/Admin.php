@@ -24,6 +24,7 @@ class Admin
 
             }
         return redirect(404);
+
         }
 
 

@@ -6,7 +6,7 @@
         <div class="row">
             <h2>Create And Publish</h2>
             {{--{{session()}}--}}
-            {!! Form::open(['method'=>'post','action'=>'AdminPostsController@store','files'=>'true', 'class'=>'form-horizontal']) !!}
+            {!! Form::open(['method'=>'PATCH','action'=>['AdminPostsController@update',$post->id],'files'=>'true', 'class'=>'form-horizontal']) !!}
             {{Form::token()}}
             <fieldset>
 
@@ -16,7 +16,7 @@
                 <div class="form-group">
                     {!! Form::label('title','Post Title',['class'=>'col-md-4 control-label' ]) !!}
                     <div class="col-md-4">
-                        {!! Form::text('title',null,['class'=>'form-control input-md']) !!}
+                        {!! Form::text('title',$post->title,['class'=>'form-control input-md']) !!}
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                 <div class="form-group">
                     {!! Form::label('content','Post Content',['class'=>'col-md-4 control-label' ]) !!}
                     <div class="col-md-4">
-                        {!! Form::textarea('content',null,['class'=>'form-control input-md' , 'rows'=>'3']) !!}
+                        {!! Form::textarea('content',$post->content,['class'=>'form-control input-md' , 'rows'=>'3']) !!}
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                     <div class="col-md-4">
 
 
-                        {!! Form::select('status',['published'=>'published','draft'=>'draft'], 'draft') !!}
+                        {!! Form::select('status',['published'=>'published','draft'=>'draft'], $post->status) !!}
 
 
                         <span class="help-block"> </span>
@@ -47,6 +47,7 @@
                 </div>
 
                 <div class="form-group">
+                    <img src="/images/posts/{{$post->photo ? $post->photo->path : ""}}" height="100" alt="">
                     {!! Form::label('post_img','Post Image',['class'=>'col-md-4 control-label' ]) !!}
                     <div class="col-md-4">
 

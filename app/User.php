@@ -38,5 +38,8 @@ class User extends SentinelUser
     public function photo(){
        return $this->belongsTo('App\Photo');
     }
+    public function posts(){
+        return $this->hasMany('App\Post');
+    }
 
 }

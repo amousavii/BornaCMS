@@ -29,7 +29,7 @@
         @foreach($users as $user)
         <tr>
             <td><input type="checkbox" class="checkthis" /></td>
-            <td><img src="{{$user->photo ? $user->photo->path : 'http://placehold.it/400x400' }}" width="50"></td>
+            <td><img src="/images/users/{{$user->photo ? $user->photo->path : '400x400.png' }}" width="50"></td>
             <td>{{$user->first_name}}</td>
             <td>{{$user->last_name}}</td>
             <td>{{$user->email}}</td>

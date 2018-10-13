@@ -16,11 +16,11 @@ class Photo extends Model
         $this->belongsTo('App\User');
     }
 
-    protected $image_user = '/images/users/';
-
-    public function getPathAttribute($photo){
-        return $this->image_user .$photo;
-
-    }
+//    protected $image_user = '/images/users/';
+//
+//    public function getPathAttribute($photo){
+//        return $this->image_user .$photo;
+//
+//    }
 
 }

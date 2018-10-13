@@ -6,7 +6,7 @@
         <div class="row">
             <h2>Create And Publish</h2>
             {{--{{session()}}--}}
-            {!! Form::open(['method'=>'post','action'=>'AdminCategoriesController@store', 'class'=>'form-horizontal']) !!}
+            {!! Form::open(['method'=>'PATCH','action'=>['AdminCategoriesController@update',$cat->id], 'class'=>'form-horizontal']) !!}
             {{Form::token()}}
             <fieldset>
 
@@ -16,7 +16,7 @@
                 <div class="form-group">
                     {!! Form::label('name','Category Title',['class'=>'col-md-4 control-label' ]) !!}
                     <div class="col-md-4">
-                        {!! Form::text('name',null,['class'=>'form-control input-md']) !!}
+                        {!! Form::text('name',$cat->name,['class'=>'form-control input-md']) !!}
                         <span class="help-block"> </span>
                     </div>
                 </div>

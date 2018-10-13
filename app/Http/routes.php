@@ -33,6 +33,9 @@ Route::group(['middleware'=>['web','admin']],function() {
         'as' => 'admin.create.role'
     ]);
 
+    Route::resource('admin/posts' , 'AdminPostsController');
+    Route::resource('admin/categories' , 'AdminCategoriesController');
+
 
 
 });
