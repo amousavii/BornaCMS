@@ -31,13 +31,14 @@
                 <td><input type="checkbox" class="checkthis" /></td>
                 <td><img src="/images/posts/{{$post->photo ? $post->photo->path : '400x400.png' }}" width="50"></td>
                 <td>{{$post->title}}</td>
-                <td>{{substr($post->content , 10)}}</td>
+                {{--<td>{{substr($post->content , 10)}}</td>--}}
+                <td>{{$post->content }}</td>
                 <td>{{$post->status}}</td>
                 <td>
-                    {{--@foreach($post->roles as $role)--}}
-                        {{--{{$role->name}} <br>--}}
-                    {{--@endforeach--}}
-                    Default
+                    @foreach($post->categories as $cat)
+                        {{$cat->name}} <br>
+                    @endforeach
+
                 </td>
                 <td>
 

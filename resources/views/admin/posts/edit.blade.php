@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 
-
 @section('content')
     <div class="">
         <div class="row">
@@ -29,9 +28,25 @@
                     </div>
                 </div>
 
-                <!-- Text input-->
+                <!-- Check box for choosing categories -->
+                <div class="form-group">
+                    {!! Form::label('categories','Post Categories',['class'=>'col-md-4 control-label' ]) !!}
+                    <div class="col-md-4">
 
 
+
+                        @foreach($categories as $cat)
+
+                            {!! Form::checkbox('categories[]', $cat->id ,in_array($cat->id , $post_cats) ? true : false) !!}
+                            {!! Form::label('categories[]' , $cat->name) !!}
+
+                        @endforeach
+
+
+                        <span class="help-block"> </span>
+                    </div>
+
+                </div>
                 <!-- Text input-->
 
                 <div class="form-group">

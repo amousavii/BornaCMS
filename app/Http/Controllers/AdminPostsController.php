@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Photo;
 use App\Post;
@@ -21,8 +22,9 @@ class AdminPostsController extends Controller
     public function index()
     {
         $posts = Post::all();
+
         if(!$posts->isEmpty()){
-            return view('admin.posts.index' , compact('posts'));
+            return view('admin.posts.index' , compact('posts','cats'));
         }else{
             return "there is no post yet";
         }
@@ -36,7 +38,8 @@ class AdminPostsController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -47,6 +50,7 @@ class AdminPostsController extends Controller
      */
     public function store(PostRequest $request)
     {
+
         $user= Sentinel::getUser();
 //        $user= $user->getUserId();
         $data = $request->all();
@@ -58,12 +62,14 @@ class AdminPostsController extends Controller
             $data['img_id'] = $photo->id;
         }
 //        $data['user_id'] = $user;
-        $data['cat_id'] = 1 ;
+//        $data['cat_id'] = 1 ;
 
 
 //        Post::create($data);
 //        return $this->index()->withSuccess('Post Has Been Created Successfully');
-        $user->posts()->create($data);
+
+        $post = $user->posts()->create($data);
+        $post->categories()->sync($request->categories);
         return redirect('admin/posts')->withSuccess('Thank you , it has benn created');
 
         }
@@ -89,7 +95,13 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        return view('admin.posts.edit' , compact('post'));
+        $categories = Category::all();
+        $post_cats = [];
+        foreach ($post->categories as $pcat){
+            $post_cats[] .= $pcat->id;
+    } ;
+
+        return view('admin.posts.edit' , compact('post','categories','post_cats'));
     }
 
     /**
@@ -101,6 +113,17 @@ class AdminPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data=$request->all();
+        if($file = $request->file('post_img')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('images/posts', $name);
+            $photo = Photo::create(['path'=>$name]);
+            $data['img_id'] = $photo->id;
+        }
+        $post = Post::findOrFail($id);
+        $post->update($data);
+        $post->categories()->sync($request->categories);
+        return redirect('admin/posts')->withSuccess('post has been Updated successfully');
 
     }
 
