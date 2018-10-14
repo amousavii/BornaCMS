@@ -32,7 +32,7 @@
                 <td><img src="/images/posts/{{$post->photo ? $post->photo->path : '400x400.png' }}" width="50"></td>
                 <td>{{$post->title}}</td>
                 {{--<td>{{substr($post->content , 10)}}</td>--}}
-                <td>{{$post->content }}</td>
+                <td>{{str_limit($post->content , 10) }}</td>
                 <td>{{$post->status}}</td>
                 <td>
                     @foreach($post->categories as $cat)

@@ -10,13 +10,19 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
+use App\Photo;
+
 Route::get('/', function () {
     return view('front.index');
 });
 
 Route::post('/login' ,['as'=>'admin.login' , 'uses'=>'AuthUsers@login']);
-Route::get('test',function (){
+Route::get('logout',function (){
     Sentinel::logout();
+});
+Route::get('test/{id}',function ($id){
+    Photo::findOrFail($id)->delete();
 });
 Route::group(['middleware'=>['web','admin']],function() {
 

@@ -136,6 +136,11 @@ class AdminPostsController extends Controller
     public function destroy(Request $request)
     {
         $post = Post::findOrFail($request->post_id);
+        if($post->photo){
+            unlink(public_path() . '/images/posts/' . $post->photo->path);
+            Photo::findOrFail($post->photo->id)->delete();
+        }
+
         $post->delete();
         return redirect('admin/posts')->withSuccess('post has been deleted successfully');
     }

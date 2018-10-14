@@ -157,9 +157,13 @@ class AdminUsersController extends Controller
 //    }
     public function destroy(Request $request)
     {
+
         $id=$request->user_id;
         $user = Sentinel::findUserById($id);
-        unlink(public_path()  . $user->photo->path);
+        if ($user->photo){
+            unlink(public_path()  . '/images/users/' . $user->photo->path);
+        }
+
         $user->delete();
         return redirect('admin/users')->withSuccess('user Deleted Successfully');
     }

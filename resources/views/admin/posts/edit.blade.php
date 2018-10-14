@@ -5,7 +5,7 @@
         <div class="row">
             <h2>Create And Publish</h2>
             {{--{{session()}}--}}
-            {!! Form::open(['method'=>'PATCH','action'=>['AdminPostsController@update',$post->id],'files'=>'true', 'class'=>'form-horizontal']) !!}
+            {!! Form::model($post,['method'=>'PATCH','action'=>['AdminPostsController@update',$post->id],'files'=>'true', 'class'=>'form-horizontal']) !!}
             {{Form::token()}}
             <fieldset>
 
